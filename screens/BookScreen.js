@@ -5,8 +5,8 @@ import albumData from "../json/books.json";
 
 const BookScreen = ({ navigation }) => {
   return (
-    <Box>
-      <BookList 
+    <Box bgColor="white" height="100%">
+      <BookList
         list={albumData.bookList}
         navigation={navigation}
       />

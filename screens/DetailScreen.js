@@ -1,53 +1,89 @@
 import React from 'react';
-import { Linking } from 'react-native';
-import { Center, ScrollView, Box, Text, Heading, Image, Button, ButtonText } from "@gluestack-ui/themed";
+import { Linking, Image } from 'react-native';
+import StarList from '../components/StarList'
+import { HStack, Center, ScrollView, Box, Text, Pressable } from "@gluestack-ui/themed";
 
 const DetailScreen = ({ route }) => {
-  const { title, 
-    artist,
-    price,
-    url,
-    image,
-    description
-  } = route.params;
-  return (
-    <Center>
-      <ScrollView>
-          <Image
-            style={{ width: "100%", height: 300 }}
-            source={{uri: image }}
-            alt='albumImage'
-          />
-        <Box bg="#fff" padding="2" margin="2">
-          <Center>
-            <Heading pt={1} size="2xl" color='#6099E4'>Discount Now!</Heading>
-            <Heading size="3xl">Price: ${price}</Heading>
-          </Center>
-          <Button 
-            mt="4"
-            onPress={() => Linking.openURL(url)}
-          >
-            <ButtonText>
-              Buy Now !
-            </ButtonText>
-          </Button>   
-        </Box>
-        <Box bg="#fff" padding="2" margin="2">
-            <Text paddingVertical={3}>
-              <Text bold>Artist: </Text>
-              {artist}
-            </Text>
-            <Text paddingVertical={3}>            
-              <Text bold>Title: </Text>
-              {title}
-            </Text>
-            <Text mt='15' bold>Descriptions:</Text>
-            <Text>{'\t'}{description}</Text>
-        </Box>
-      </ScrollView>      
-    </Center>
-
-  );
+    const { title,
+        artist,
+        star,
+        image,
+        price,
+        description
+    } = route.params;
+    const buttontitle = `BUY NOW FOR $${price}`
+    return (
+        <Center bgColor="white" height="100%">
+            <ScrollView bgColor='#fff' w='100%' h='100%'>
+                <Center style={{}}>
+                    <Box mt="$5" style={{}}>
+                        <Image
+                            style={{
+                                height: 300,
+                                width: 210
+                            }}
+                            source={{
+                                uri: image
+                            }}
+                        />
+                    </Box>
+                    <Center mt="$5" style={{}}>
+                        <Text color='#131313'
+                            textAlign='center'
+                            fontSize={24}
+                            lineHeight={28}
+                            fontWeight='500'
+                        >{title}</Text>
+                        <Text color='#666666'
+                            textAlign='center'
+                            fontSize={14}
+                            fontWeight='400'
+                            lineHeight={16}
+                            mt={10}
+                        >{artist}</Text>
+                        <HStack mt={10}>
+                            <StarList star={star} size={20} />
+                            <Text fontSize={14}
+                                color='#131313'
+                                fontWeight='400'
+                                letterSpacing={1}
+                                pt={2}
+                                pl={5}
+                            >{star}.0</Text>
+                            <Text fontSize={14}
+                            fontWeight='400'
+                            letterSpacing={1}
+                            pt={2}
+                            >/5.0</Text>
+                        </HStack>
+                        <Text mt={20}
+                            color='#131313'
+                            textAlign='center'
+                            fontSize={14}
+                            fontWeight='400'
+                            lineHeight={24}
+                        >{description}</Text>
+                    </Center>
+                    <Pressable mt={20}
+                        justifyContent="center"
+                        w={190}
+                        h={36}
+                        borderRadius={4}
+                        backgroundColor="#6200EE"
+                        onPress={() => Linking.openURL(url)}
+                    >
+                        <Text
+                            color="#fff"
+                            textAlign='center'
+                            fontSize={12}
+                            fontWeight='700'
+                            lineHeight={16}
+                            letterSpacing={1.2}
+                        >{buttontitle}</Text>
+                    </Pressable>
+                </Center>
+            </ScrollView>
+        </Center>
+    );
 }
-
 export default DetailScreen;

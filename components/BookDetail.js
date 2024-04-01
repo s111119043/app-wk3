@@ -1,34 +1,45 @@
 import React from "react";
-import { Box, HStack, VStack, Text, Image, Pressable } from "@gluestack-ui/themed";
+import { Image } from "react-native";
+import { useNavigation } from '@react-navigation/native'; 
+import StarList from "./StarList";
+import { Box, VStack, Text, Pressable } from "@gluestack-ui/themed";
 
-const BookDetail = ({ album, navigation }) => {
+const BookDetail = ({ book }) => {
+  const navigation = useNavigation(); 
+
   return (
-    <Box p={10} marginX={1} marginBottom={2} borderRadius={3} shadow={2}>
-      <HStack bg='#fff'>
-          <Image
-            width={50}
-            height={50}
-            margin="1"
-            source={{ uri: album.thumbnail_image }}
-            alt="artist"
-          />
-        <VStack margin={2} paddingLeft={2} justifyContent="space-between">
-          <Text bold>{album.title}</Text>
-          <Text>{album.artist}</Text>
-        </VStack>
-      </HStack>
-      <Box bg="#fff">
-        <Pressable 
-          onPress={() => navigation.navigate('Detail', album)}
+    <VStack>
+      <Box p={10} mt={5}>
+        <Pressable
+          onPress={() => navigation.navigate('Detail', book)}
         >
-            <Image
-              style={{ width: "100%", height: 300 }}
-              source={{ uri: album.image }}
-              alt="album"
-            />            
+          <Image height={200} width={140}
+            source={{
+              uri: book.image
+            }}
+          />
         </Pressable>
-      </Box>   
-    </Box>
-  )};
+      </Box>
+      <VStack pl={12}>
+        <Box mb={5}>
+          {
+            book.StarAppear ?
+              <StarList star={book.star} size={18} />
+              : null
+          }
+        </Box>
+        <Text fontSize={16}
+          color="#131313"
+          fontWeight='500'
+        >{book.title}</Text>
+        <Text mt={5}
+          fontSize={12}
+          fontWeight='500'
+          color="#666666"
+        >{book.artist}</Text>
+      </VStack>
+    </VStack>
+  );
+};
 
 export default BookDetail;
